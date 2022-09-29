@@ -146,6 +146,11 @@ public class VistaPerson extends javax.swing.JFrame {
 
             }
         ));
+        txtListaPersonas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtListaPersonasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtListaPersonas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -191,7 +196,17 @@ public class VistaPerson extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ClassPerson objetoPerson = new ClassPerson();
+        objetoPerson.insertPersona(txtidentificador, txtnombres, txtapellidos, txtnacimiento);
+        objetoPerson.MostrarPersonas(txtListaPersonas);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtListaPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtListaPersonasMouseClicked
+        // TODO add your handling code here:
+        ClassPerson objetoPerson = new ClassPerson();
+        objetoPerson.SeleccionarPersona(txtListaPersonas, txtidentificador, txtnombres, txtapellidos, txtnacimiento);
+       
+    }//GEN-LAST:event_txtListaPersonasMouseClicked
 
     /**
      * @param args the command line arguments

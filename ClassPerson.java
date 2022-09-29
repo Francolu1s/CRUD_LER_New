@@ -48,11 +48,11 @@ public class ClassPerson {
         this.apellido = apellido;
     }
 
-    public String getFechadeNacimiento() {
+    public String getfechadeNacimiento() {
         return fechadeNacimiento;
     }
 
-    public void setFechadeNacimiento(String fechadeNacimiento) {
+    public void setfechadeNacimiento(String fechadeNacimiento) {
         this.fechadeNacimiento = fechadeNacimiento;
     }
     
@@ -73,7 +73,9 @@ public class ClassPerson {
         paramTablaTotalPerson.setModel(modelo);
         
         
-        sql = "SELECT * FROM person";
+        sql = "SELECT * FROM public.\"Personas_LER\"\n" +
+        "ORDER BY id ASC ";
+        
         
         String [] datos = new String [sql.length()];
         
@@ -103,6 +105,59 @@ public class ClassPerson {
         } catch (Exception e) {
             
             JOptionPane.showMessageDialog(null, "Error:"+ e.toString());
+            
+        }
+    }
+    
+    public void insertPersona (JTextField paramCodigo, JTextField paramNombre, JTextField paramApellido, JTextField paramfechadeNacimiento){
+    
+        setCodigo(Integer.parseInt(paramCodigo.getText()));
+        setNombre(paramNombre.getText());
+        setApellido(paramApellido.getText());
+        setfechadeNacimiento(paramfechadeNacimiento.getText());
+        
+        ClassConexion objetoConexion = new ClassConexion();
+        
+        String consulta = "INSERT INTO public.\"Personas_LER\"(\n" +
+        "	id, nombre, apellido, \"fechadeNacimiento\")\n" +
+        "	VALUES (?, ?, ?, ?);";
+        
+        try {
+            
+            CallableStatement cs = objetoConexion.establecerConexion().prepareCall(consulta);
+            cs.setInt(1, getCodigo());
+            cs.setString(2, getNombre());
+            cs.setString(3, getApellido());
+            cs.setString(4, getfechadeNacimiento());
+            
+            cs.execute();
+            
+            JOptionPane.showMessageDialog(null, "Se inserto correctamente");
+        
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error : " + e.toString());
+        }
+        
+    }
+    
+    public void SeleccionarPersona(JTable paramTablePerson, JTextField paramCodigo, JTextField paramNombre, JTextField paramApellido, JTextField paramfechadeNacimiento){
+     
+        try {
+            int fila = paramTablePerson.getSelectedRow();
+        
+            if (fila > 0 ){
+                paramCodigo.setText(paramTablePerson.getValueAt(fila, 0).toString());
+                paramNombre.setText(paramTablePerson.getValueAt(fila, 1).toString());
+                paramApellido.setText(paramTablePerson.getValueAt(fila, 2).toString());
+                paramfechadeNacimiento.setText(paramTablePerson.getValueAt(fila, 3).toString());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Error : Fila no seleccionada");
+            }
+            
+        } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, "Error : " + e.toString());
             
         }
     }
