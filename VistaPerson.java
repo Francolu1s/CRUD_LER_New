@@ -16,6 +16,8 @@ public class VistaPerson extends javax.swing.JFrame {
     public VistaPerson() {
         initComponents();
         
+        /*txtidentificador.setEnabled(false);*/
+        
         ClassPerson objetoPerson = new ClassPerson();
         objetoPerson.MostrarPersonas(txtListaPersonas);
         
@@ -66,8 +68,18 @@ public class VistaPerson extends javax.swing.JFrame {
         });
 
         jButton2.setText("MODIFICAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("BORRAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -207,6 +219,20 @@ public class VistaPerson extends javax.swing.JFrame {
         objetoPerson.SeleccionarPersona(txtListaPersonas, txtidentificador, txtnombres, txtapellidos, txtnacimiento);
        
     }//GEN-LAST:event_txtListaPersonasMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        ClassPerson objetoPerson = new ClassPerson();
+        objetoPerson.modificarPersona(txtidentificador, txtnombres, txtapellidos, txtnacimiento);
+        objetoPerson.MostrarPersonas(txtListaPersonas);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        ClassPerson objetoPerson = new ClassPerson();
+        objetoPerson.EliminarPersona(txtidentificador);
+        objetoPerson.MostrarPersonas(txtListaPersonas);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

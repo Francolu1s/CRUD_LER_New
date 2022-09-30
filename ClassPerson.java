@@ -161,4 +161,60 @@ public class ClassPerson {
             
         }
     }
+    
+        public void modificarPersona (JTextField paramCodigo, JTextField paramNombre, JTextField paramApellido, JTextField paramfechadeNacimiento){
+    
+        setCodigo(Integer.parseInt(paramCodigo.getText()));
+        setNombre(paramNombre.getText());
+        setApellido(paramApellido.getText());
+        setfechadeNacimiento(paramfechadeNacimiento.getText());
+        
+        ClassConexion objetoConexion = new ClassConexion();
+        
+        String consulta = "UPDATE public.\"Personas_LER\" SET nombre =?, apellido=?, \"fechadeNacimiento\" =? WHERE id=? ";
+        
+        try {
+            
+            CallableStatement cs = objetoConexion.establecerConexion().prepareCall(consulta);
+            
+            cs.setString(1, getNombre());
+            cs.setString(2, getApellido());
+            cs.setString(3, getfechadeNacimiento());
+            cs.setInt(4, getCodigo());
+            
+            cs.execute();
+            
+            JOptionPane.showMessageDialog(null, "Se Actualizo correctamente");
+        
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error : " + e.toString());
+        }
+        
+    }
+        
+        public void EliminarPersona (JTextField paramCodigo){
+    
+        setCodigo(Integer.parseInt(paramCodigo.getText()));
+        
+        ClassConexion objetoConexion = new ClassConexion();
+        
+        String consulta = """
+                          DELETE FROM public."Personas_LER"
+                          \tWHERE id=?; """;
+        
+        try {
+            
+            CallableStatement cs = objetoConexion.establecerConexion().prepareCall(consulta);
+            
+            cs.setInt(1, getCodigo());
+            
+            cs.execute();
+            
+            JOptionPane.showMessageDialog(null, "Se Elimino correctamente");
+        
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error : " + e.toString());
+        }
+        
+    }
 }
